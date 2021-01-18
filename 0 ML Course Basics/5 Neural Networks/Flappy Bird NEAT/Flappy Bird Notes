@@ -1,0 +1,45 @@
+NEAT stands for NeuroEvolution of Augmenting Topologies
+
+Documentation for NEAT:
+
+Website for an introduction of NEAT including config file documentation:
+https://neat-python.readthedocs.io/en/latest/neat_overview.html
+
+Very informative essay on how NEAT works and how to use it
+http://nn.cs.utexas.edu/downloads/papers/stanley.cec02.pdf
+
+When planning think about all the different types of objects you will need:
+bird (multiple birds when programming AI)
+pipes
+floor
+
+
+What NEAT does is add, remove and adjust weights and neurons. It favours smaller architectures so that your network
+does not unnecessarily become too complicated.
+
+
+
+What it handles:
+
+
+
+Inputs (bird y, top pipe, bottom pipe (although you could try only one pipe but it could take longer to initialise))
+
+Outputs (to jump or not to jump, 1 neuron for the input)
+
+Activation function (we pick the functions for the input and output and NEAT chooses the functions for the hidden
+layer(s). We are choosing TanH (hyperbolic tangent) for our input layer
+
+Population size (how many birds we run each generation. The best ones bred and their children and mutated. We keep
+on doing this until we get a perfect bird)
+
+Fitness function (how we decide which birds should be selected to be bred. We will choose the ones which got the
+furthest. We can influence birds so that they will try to go further as well)
+
+Max generations (it is what it says, its just there so that our program does not unnecessarily keep on running an model
+that isn't working well, our limit will be 30)
+
+
+
+There is a huge file containing all of the values called config.txt with the probability of mutation and everything else
+All the types of variables explanation is in the documentation

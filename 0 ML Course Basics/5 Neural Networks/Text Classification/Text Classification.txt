@@ -1,0 +1,59 @@
+the jupyter file is 'Basic course neural network text classification'
+the jupyter file which is saved and experiments with a review you can test is called 'Text classification saved model'
+
+the saved model has a word limit of 88000 instead of 10000 because since we are saving, it will not be run again so
+the full amount of useful data will be put into the model
+the tensorflow documentation is on 'https://www.tensorflow.org/tutorials/keras/text_classification'
+
+how it works out if the review is positive or negative:
+it uses sigmoid to evaluate between 1 and 0 with 1 being the most positive and vice versa
+
+One of the main issues is that the computer cannot understand context.
+the difference between:
+'have a nice day'
+and
+'have a good day'
+is minimal but the computer will return the strings of
+if we say have is 0, a is 1, good is 2, nice is 3 and day is 4
+[0, 1, 3, 4]
+and
+[0, 1, 2, 4]
+and these are similar sentences but the computer interprets them very differently
+
+To get past this problem we install, our embedding layer will try and group similar words
+
+Our embedding value generates word vectors to pass to future layers to try and group words
+We have picked 16 dimensions for each vector.
+When we create the embedding layer, we initially create 10,000 word vectors (one for every word)
+
+To work out if words are similar by grouping them we:
+Say we have two words: great and good
+On a graph it could look like then are on a right angle and great is 70 degrees away from good
+(good and great on a graph example image)
+
+From the graph we would determine that they are very different values
+So, we want them to get closer together, whether great moves to good, good moves to great or they move
+closer together.
+
+It works this out by looking at the words around them and then grouping them based on that.
+This is a simplified version. A complicated algorithm is used to do this. This is what the output could be after
+the algorithm has been applied. The graph also shows bad to give an idea of where other words could be, especially
+negative ones (algorithm applied great and good graph with bad)
+
+From the embedding layer we get an output dimension of 16 dimensions. This is basically just how many coefficients
+we have for our vector
+For each dimension we will have a coefficient for it. Angle X will have the coefficient A, angle Y will have B and if
+you have more planes then dimension Z will have the coefficient of C so if you had three dimensions then you would have
+the equation of AX + BY + CZ = lambda (constant value). This is how we define a line in n dimensions.
+
+To process all of this data we need to scale it down. Therefore we have the global average pooling. This line of neurons
+takes whatever dimension our data is in and puts it in a lower dimension to minimise the amount of dimensions processed
+
+In the first layer we will have all he different numerical values for all the words ands then all of their values on
+in all 16 dimensions in the second layer. This data is then averaged in the third layer. Now we go into the dense layer
+which will classify our data. The amount of neurons for the first dense layer (fourth layer overall) isd an arbitrary
+number that is experimented with until you get the best results. In our layer we have 16 neurons because it works best
+for us. The second dense layer is the output layer and it has one neuron that gives a value between 0 and 1 to
+classify how negative or positive our review was. The dense layers apply a function that aims to find patterns between
+certain words as mentioned
+

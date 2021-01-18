@@ -1,1 +1,0 @@
-The jupyter notebook is called 'Basic course neural network clothes'
