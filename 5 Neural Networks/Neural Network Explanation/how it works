@@ -1,0 +1,247 @@
+Neural networks are based on neurons in the brain
+
+
+PART 1, THE ALGORITHM BEHIND NEURAL NETWORKS
+Basics of neural networks:
+
+
+There are a lot of them connected in some kind of patter
+they can either fire or not, on or off, like a 1 or 0
+when a neuron is given a signal e.g. you touched something
+it will fire, it will then look around at directly connected
+neurons and possibly cause them to fire or turn off, it's a
+chain reaction
+
+A neural networks is a connected layer of neurons
+the first layer is called the input layer
+the last layer is called the output layer
+imagine a neural network with 4 input neurons and 1 neuron
+on the output layer and nothing in between
+if all the ones on the input layer are connected once to the
+neurons in the next layer then this is called a fully
+connected neural network and is the most common kind of
+network but they can be connected in many ways such as
+several times or not at all
+
+In a fully connected neural network with 4 on the input layer
+ad 2 on the output layer there would be 8 total connections
+
+Each connection is known as a weight with the top one being
+weight one and so on
+
+Input and output are the only layers looked at when training
+and looking at the model
+
+Note: there can be more outputs than inputs
+
+
+
+
+
+
+Architecture for Snake:
+
+
+
+In making a neural network for snake you could have the
+inputs as what is in front, left and right of the head and
+recommended direction and the output is whether to follow
+the recommended direction. If there is nothing in the
+direction specified it can be given the value of 0 else
+it is 1 it would look like:
+ -1,    0,     1
+left, front, right
+the recommended direction could be forwards or
+left, if left is chosen then recommended direction would be
+-1, you can check if the recommended direction would keep
+the snake alive and if it does then you could carry that to
+the output and return a 1 to output to return that it
+should follow that, if right is the recommended direction (1)
+then it would return a 0 as the output as it would crash
+
+the values could be anything that is an
+integer or float, but there has to be a value
+
+Math to determine which way it should go:
+take the weighted sum of the values multiplied by the weights
+
+
+
+
+
+for (i = 1, i > number of weights, i++):
+    Valuei * Weighti
+
+Output = V1*W1 + V2*W2 + V3*W3 + V4*W4
+
+
+
+
+That will also be the output of the network
+
+However a bias must also be added (a bias is a thing which
+makes the calculation wrong e.g. measuring yourself
+with shoes on; the soles would be the bias) It helps eliminate error in later layers
+that could cause an output that is technically correct but not what we want
+it is always a constant
+
+The bias is denoted as c or sometimes b, it a constant value that can be
++ or - like this
+for (i = 1, i > number of weights, i++):
+    (Valuei * Weighti) +/- bi
+
+Each connection, as well as a weight, has a bias as well
+and are numbered the same way as weights. The bias can be more easily explained by
+saying that it is a special neuron that is below all the rest and has a
+connection to all the other neurons that is +/- b
+
+having the bias added on would case the equation to look like
+this
+
+Output = V1*W1 + V2*W2 + V3*W3 + V4*W4 + b1 + b2 + b3 + b4
+
+As the snake progresses it will start with random weights and biases at the start
+and if it survives then it won't change the biases and weights and vice versa
+
+
+
+
+It is essentially a very complicated linear regression model so far.
+It has been adding mx+c together when changing the biases and weights.
+However, this limits functionality and complexity of the network so next
+we use activation functions
+
+
+
+
+
+
+Activation functions
+
+They are non-linear functions that can go up in curves instead of
+a straight line. This increases complexity and possibility
+
+
+    Sigmoid function
+
+A type of activation function is a sigmoid function
+Sigmoid functions map any value you give it in between -1 and 1
+
+It takes any value and the closer that value is to infinity, the closer the
+output is to 1 and the closer it is to negative infinity, the closer the
+output is to -1
+
+You can also take a 7 and determine it as a positive output and it is closer
+to one or you can determine it as negative because it is so far away
+
+The higher the degree of complexity (high level mathematical term) the
+more complicated your network can be as a graph. A degree 9 can be a
+crazy mixture of curves whilst lines can only have a far worse degree
+of complexity due to their simple nature
+
+The functions also shrink data down from hundreds of thousands of digits long
+into use-able data
+example you can take (Vi*Vi+bi) and put it through a built-in function
+such as f(Vi*Vi+bi) and that result is the output neuron, therefore you can
+have a complex function with the same complexity of a result, which is less
+taxing on the computer, and a more accurate and complex network
+
+
+    relu (Rectify linear unit function)
+
+This is a more common activation function
+It takes all the values that are negative and makes them all zero and takes
+all the values that are positive and makes them more positive
+This enhances the complexity of data points by making all negative values to
+zero and then making more of a differentiation between successful points of
+how successful they were
+
+
+    softmax
+
+This picks values for each neuron so each value adds up to one so you can easily
+take probability values from each
+
+
+
+    TanH (Hyperbolic Tangent)
+
+It takes a value between -1 and 1 and 1 means a positive output and -1 means a negative output. It allows for the more
+differentiation that other functions such as relu. It is similar to sigmoid but in TanH the derivatives are stronger
+(the curve of the line is more drastic)
+
+
+Loss functions
+
+This calculates how much to change with weights and biases by
+Essentially it calculates how wrong your answer was because if your answer
+was 0.79 and the correct one was 1 then it would take the amount of error as
+0.21 but if you had 0.85 which is much better it would still make a change by
+0.15 which it too much for a answer of this closeness. The loss function
+accounts for this to get a better level of change overall from model to model
+
+They are non-linear to get a more complex and accurate result
+
+
+    Binary_crossentropy
+If our model got 0 and the correct answer was 0.2 then it will calculate how much of a difference 0.2 is from 0
+
+
+
+PART 2, HOW THE COURSE'S NEURAL NETWORK IS DESIGNED
+
+
+
+
+
+Each image is an array of 28*28 with each pixel represented by a greyness value in
+the rgb scale
+for example what one image may look like is:
+
+[
+[ 0.1, 0.1437498374984, et.c.there should be 28 values in here]  this array is
+repeated 28 times down
+]
+
+However, there is no way we can have a fast network when passing all of this data
+to a neuron so we need to put it in a different form
+
+What we can do here is a technique called flabbing the data which just smooshes
+all the data together of an interior list e.g. [[1], [2], [3]] becomes [1, 2, 3]
+In our case this works fine
+
+In our flabbed data we would get an array with 784 (28*28) values because
+that's how many values are in each image when all put into one array
+
+Input Layer:
+This will be the input layer, there will be 784 neurons, each representing
+each pixel
+
+Output Layer:
+To decide our output we will have 10 different neurons at the end because we have
+ten different items that we are differentiating between (0 - 9)
+Each of these output neurons will have a value and this will represent the
+probability of it being the item chosen and whichever has the greatest
+probability will be the one chosen as the item that has been presented
+
+Hidden Layers:
+We could have no hidden layers and simply decide from the 7840 weights and biases
+an instant result but this doesn't have enough weights and biases for a network
+like this to be accurate so far so we need more layers. It is a generally a good
+idea to make your hidden layer of a percentage of the input layer however we aren't
+doing this for this network because it works better for this network from
+testing it
+Our hidden layer has 128 neurons, all fully connected which will help look for
+patterns in the data as well as make a more complicated and adjustable network
+We don't really know what the hidden layer will do but we hope it will find some
+patterns
+Typically you pick 15-20% of the input layer as the hidden layer, but whatever
+works best should be what you choose. Usually you also have one hidden layer but
+again, whatever works best is what you should choose
+
+
+
+
+
+
+
